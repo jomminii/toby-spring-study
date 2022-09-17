@@ -18,6 +18,7 @@
 | inseo24  | [@inseo24](https://github.com/inseo24)
 | eastperson  | [@eastperson](https://github.com/eastperson)
 | takoyummy   | [@takoyummy](https://github.com/takoyummy)
+| withbeth   | [@withbeth](https://github.com/withbeth)
 
 ## ✏️ Study
 
@@ -32,6 +33,7 @@
 | inseo24  | [1장. 오브젝트와 의존관계](https://github.com/jomminii/toby-spring-study/tree/main/seoin/ch01) |
 | eastperson  | [1장. 오브젝트와 의존관계](https://github.com/jomminii/toby-spring-study/tree/main/eastperson/chapter1/chapter1.md) |                                                                                                         
 | takoyummy      |     [1장. 오브젝트와 의존관계](https://github.com/jomminii/toby-spring-study/blob/0315363f6aa975bdf6dbbc39908a97f80758de17/yummy/chapter01/README.md)                                                                                            |
+| withbeth      |     [1장. 오브젝트와 의존관계](https://github.com/jomminii/toby-spring-study/blob/main/withbeth/chapter1/README.md)                                                                                            |
 
 ### Chapter2
 
