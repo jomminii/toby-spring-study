@@ -127,8 +127,6 @@ public static void main(String[] args) throws SQLException, ClassNotFoundExcepti
     }
 ```
 
-[##_Image|kage@becHG4/btrLVYBH7qh/3dGey7PaWStBka9fhygVKK/img.png|CDM|1.3|{"originWidth":265,"originHeight":105,"style":"alignCenter"}_##]
-
  - 결과는 성공적으로 잘 출력되나, 사실 위의 UserDao클래스는 객체지향적으로 설계되지 않음.
 
  - 스프링은 해당 dao코드를 객체지향적으로 짤 수 있게끔 설계되었으며, 이를 다음 chapter에서 설명. 
@@ -227,20 +225,6 @@ public class UserDao {
 
 다음과 같이 리팩토링 할 수 있다.
 
-<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
-<!DOCTYPE html>
-<html>
-<head>
-<title>Dao File</title>
-<meta charset="utf-8"/>
-</head>
-<body><div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;app.diagrams.net\&quot; modified=\&quot;2022-09-12T08:53:05.271Z\&quot; agent=\&quot;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36\&quot; etag=\&quot;JkUr828wV7RBBGzWd8hm\&quot; version=\&quot;20.3.0\&quot; type=\&quot;device\&quot;&gt;&lt;diagram id=\&quot;LVzI97gPg4KVyFokNSft\&quot; name=\&quot;페이지-1\&quot;&gt;7Vnfb9s2EP5rDGwPDSTql/MY21n3kG7GgqHtIy3REhuKNCi6tvvX7yiSlmTZadraddAJMBLd8UiR933HO1KjYFpu30q8Kt6JjLAR8rLtKJiNEIriEP5qxc4okiQ2ilzSzKj8RvFIvxCr9Kx2TTNSdQyVEEzRVVeZCs5Jqjo6LKXYdM2WgnXfusI56SkeU8z62vc0U4XRjlHS6P8kNC/cm/341rSU2BnblVQFzsSmpQruR8FUCqHMU7mdEqZ95/xi+v1xonU/MUm4ekmHyd1s/iTKaHk/+Xu+KKtP6dP8jR3lM2Zru+B/KyJnWNg5q51zRLWhJcMcpMlScPVoWzyQ04Ky7AHvxFpPpFI4fXLSpBCSfgF7zKDJBwU0S2VxRrr3kjI2FUxIUHBRv6Dp9KgHs6+RpIJuc7dg/0D1Dm87hg+4Um6CgjG8quiinrLuWGKZUz4RSonSGllPEKnI9qSL/T1wQHgiSqLkDkwc2y3Ulut+YMm/aZjjh9amaLHmdmwJa8ma70du8IQHC+k3wIt68OIs++33EYIgDPxm1S2cYfWqhkmKJ3KAyxGoMKM5B5GRpe6m3Ucheu6sWomVHmyFU8rzh9pmFjaaf6wPtEpA3yWrI6SgWUa4RlIorPBiz7SVoFzVToom8ANXTr2baBTBxKcg+40MP20u1VRwWAumNYIEOLEhmhcvg/t0zPQ5YEF34f41zFF8IcyDHuY5UQPml8Q8jK+MeXgM86lJiVTwAf1Lop+gK6MfDUn8jEk8CMNOFk9euKFfLInHQxI/f0hHrzuJJ0MS/9mYXz2Jj4ckfj30r57Eb3vo9zB2KD3gBWFzUVFNC2ha2Ax4AsZClU3e1vRwFxlIawq80sOX21zf39yYOxNk/kN7fW/j3cT6UTs81HhyodLifBkXeQfn5mjcB8M7AoY7b58dDHf71ELjr59aU8W/Vk2Fkm5NheIXJtgIXQrh/s3XsNue88jkHSfEngBX3m79/pF5NkT490d4GHT38FcQ4f1j8RDh54zw8HVHuCugnquoCM/uTKEzSxmuKpp26yUp1jwjmXU72VL1oS6HQit91HY3PlDNyLNty3S2awlzIimsi0in47BGM1jkxI/ttmaoWnJjmSWQrPfV6iBQYZliLVPyjINskQWbEsTFd2zlLWSjZ4ozSRhW9HN3vsfQtm+Ya3K3Sodxd2MJ0UHRZ9Zpe6HW96+DgYKDHSpIDgYyjugNVJNvv+wf4GP/Yv58fAziDiO9JPmlGXli6/mfMBIognctM5sOvomzIDafno158/0+uP8P&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}"></div>
-<script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
-</body>
-</html>
-
-\* (발그림 죄송... 저 화살표 부분이 UserDao에 연결되어있다고 가정해주십시오)
-
 ```
 public abstract class UserDao {
 
@@ -299,17 +283,7 @@ public class NUserDao extends UserDao{
 
 ## 1.3 DAO의 확장
 
-<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
-<!DOCTYPE html>
-<html>
-<head>
-<title>separate</title>
-<meta charset="utf-8"/>
-</head>
-<body><div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;app.diagrams.net\&quot; modified=\&quot;2022-09-12T10:12:19.611Z\&quot; agent=\&quot;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36\&quot; etag=\&quot;LbzV3Md-c6SCGXMNaxov\&quot; version=\&quot;20.3.0\&quot; type=\&quot;device\&quot;&gt;&lt;diagram id=\&quot;gjivJGeRaO1PcaMqxmMY\&quot; name=\&quot;페이지-1\&quot;&gt;7Zdta9swEMc/TWB70eGHPPVl47QbrIWybPRlUa2LLSrrjKw0ST/9zrZs13ZCva5hDAoh+P46naX7nWRp5AfJ7qtmaXyDHOTIc/hu5C9HnjeZjuk/F/alMHPPSyHSgpeS2wgr8QxWdKy6ERyylqNBlEakbTFEpSA0LY1pjdu22xpl+60pi6AnrEIm++qd4CYu1bk3a/RvIKK4erM7tfNLWOVsZ5LFjOP2heRfjvxAI5ryKdkFIPPcVXkp+10daa0HpkGZIR3wfuuN9yAfgnsuVi5+973Z2aSM8sTkxk74VwZ6ydCO2eyrRGRbkUimyFqsUZmVbXHJZlJEip5DGgloEp5AG0E5vLANBlNSw1hIfs32uMnHmxkWPlbWIkYtnikskzYmNWtjy8GbtjxWeU+SHVI1ZORzWyXB7Ug3bNdyvGaZsUKIUrI0Ew/1NBKmI6EWaAwm1slmh6YDu6Npd2uYtAgAEzB6Ty62w9Tit/Vf29ummtxKi1uV5NkqthUc1aEbyPRgOf8B82mPeSaSVEJQLiGB6oY9EsduBVAOTEFG4yM5SyTUS4VlSQgpO1JVFRLW5mhNZCkLhYquC5/luFF+2EzkElLftSzWTiw4B5XzRMMMK+HlpFIUyhSZmizoRwkNnC+T0YQGHpDtNjb9cndtaL40FyYKjkCVsYW8OoZBP76a+pVQox9GvvJ7d/CzHvgeYykKdiXjasNz3wQ4IVQSGqI/c+DLM7dH3e9T9w8QluwB5C1mIq9Q0nTp2yH/Gtx29QoVgxanhD7xhkGfn4j5vMeccf7p88fifmfOQ7f1ky3u8x7oCEwOml7ou83H7IP5uzGf/+sNvTokv4C+GvQpP3KYc/76lHagbP7Xg9vYefPJzTkV7wFfcFD8Ir/3kIVpsbJIuRKyQkaWBUYHTKJjkqpF40Zx4K0MAu9dj17N36H8aJDMiKd2rEP5seFu89XfsKgvUZaF73VSnOFGh2B7vbwEdQJ1ofYCUUHTvtkLVOCq53iIIJnNXa50by7E/uVv&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}"></div>
-<script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
-</body>
-</html>
+![제목 없는 다이어그램 drawio](https://user-images.githubusercontent.com/40001921/190834910-b1cffd1e-3bb7-4a54-aea4-b58be9319271.png)
 
 \- DB 커넥션 하는 부분을 이전과 달리 상속관계가 아닌 독립된 클래스로 만들고, 이를 UserDao가 이용하게끔 분리함
 
@@ -381,17 +355,8 @@ public class UserDao {
 
 \- 인터페이스를 통해, 어떤 일만 하겠다고 정의를 하면 되고, 해당 인터페이스를 구현하는 클래스에서 필요한 내용을 구현하면 됨.
 
-<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=5,IE=9" ><![endif]-->
-<!DOCTYPE html>
-<html>
-<head>
-<title>interface</title>
-<meta charset="utf-8"/>
-</head>
-<body><div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;app.diagrams.net\&quot; modified=\&quot;2022-09-12T10:40:47.532Z\&quot; agent=\&quot;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36\&quot; etag=\&quot;fLOVGC3rNYdv49x5v-pu\&quot; version=\&quot;20.3.0\&quot; type=\&quot;device\&quot;&gt;&lt;diagram id=\&quot;bFoD5zHsZeTquyHUPzh6\&quot; name=\&quot;페이지-1\&quot;&gt;7Vltb5swEP41kbYPq3gJlHxsw16ktVXVrNr2afLABasGM+M0yX79zmCHgJOGtmTrpEhRxD2cL/Y995gzGbnTbPmRoyK9ZDGmI8eKlyM3HDmO54/hWwKrGji1JzWQcBLXkN0AM/IbK9BS6JzEuGw5CsaoIEUbjFie40i0MMQ5W7Td7hht/2qBEmwAswhRE/1KYpHWaOCcNvgnTJJU/7Ltq/VlSDurlZQpitliA3Lfj9wpZ0zUV9lyiqnMnc5LPe7DjrvriXGciz4Dbr1JPE4+/xI/Tv3w5jZ5uLqYvVNRHhCdqwXflpiHiKk5i5VORLkgGUU5WOd3LBczdccGG1GS5HAdwUwwB+ABc0Egh2fqhmAFoFFKaHyBVmwu51sKFN1r6zxlnPyGsIiqmHCbC1UOjt/ymMmRAFuAclyCz7VOgt2BLtGy5XiBSqGAiFGKipL8XC8jQzwh+TkTgmXKSWUHloOXO9Nur8kEEWCWYcFX4KIG+Ip+Vf9re9FUk62xtFVJjqpiVcHJOnRDMlwonp/AuWNwXpKsoHhaS4iw/BLdA4/dCoAciIoZzu7BmTKgOsxZXRKE0g6kq4LiO7GzJsoCRSRPLiqfcNwgNyoTEmIw9o5W2klJHONc8skEEqgmTzJVMJKLKlPeOXwgoVPrxBt5MPEp2HZjw0e6cwHrhbUgUvGIoTIWWFZHP9J3q8mshDX1/ZjXfoMT7xrEGxxTUnFXc6w3PPtZBGdAFcUNo18k4eE722DdNVl3tzBM0U9Mr1lJZIUCxmvfDvP7yG1XL8lTzMkhSfecfqQHB+J8bHCO4vjN26O4B+a577Z+MHF7BtEJFpJo+EHXbh5mR84H4zz41xu6b3C+7xm+o4uzXtyebamX/7VjG1vPbtmsAxEdGERn6H6jYQOdH/X9DH37gzRswfhAtJ/ub9hwHp/JYy5YrKgSDcgHQrVQwVIyhfMEaFJk+g5n8zzGcUs3ODZOw3tVsy07HFMkyEM71rb0qHDXshgaBa7PzIoI1+kIq2RzHmE1avPM2wnUlbIRCLYxeEwagSq21mt8PoETg8Cr4w798h3aCdq0jt1/vkPrwMcteuAtevK6t2jbfIMWHiX+col7zuuTuPni7CjxQU5Zw7w3O5zGn9aHRRSVJYke67YgH3z1TRonnuVr4HsFTIJAA+Fy0z9cbVrXmBNYnnzfXoNLIlREZX3fuNNEkoYO1Lfpg5VWDdf+Tqfupx7xC/Y2kd4War1h+krX37GpPLmvtDt9ZdCvr4QSQasNNyW//hO2rMfn1W2M2v5wUc9g0CbXMVufx+ShH0x9tNFSxh5V9C/mvUW6a0P6O1W6i8QnV6nXqR7XO0yV+tagVQdm869o7d78tey+/wM=&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}"></div>
-<script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
-</body>
-</html>
+![제목 없는 다이어그램 drawio (1)](https://user-images.githubusercontent.com/40001921/190834936-ccac2a56-478b-425c-9268-5945c3cb8bff.png)
+
 
 \- ConnectionMaker를 정의하고 이를 각자 구현함
 
@@ -494,8 +459,7 @@ public class UserDaoTest {
 
 \- 즉 UserDaoTest는 UserDao와 ConnectionMaker구현 클래스와의 런타임 오브젝트 의존 관계를 설정하는 책임을 담당하고 있음 
 
-<div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom layers tags lightbox&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile host=\&quot;app.diagrams.net\&quot; modified=\&quot;2022-09-12T11:49:18.994Z\&quot; agent=\&quot;5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36\&quot; etag=\&quot;1YUgR8da9pSV2tdp5Cj9\&quot; version=\&quot;20.3.0\&quot; type=\&quot;device\&quot;&gt;&lt;diagram id=\&quot;dIaMDhr30mNbuuR2birH\&quot; name=\&quot;페이지-1\&quot;&gt;7VhNc9owEP01PiZjWTbGR2yS9pDMZIa2NEcFKbamssXIIpj8+kpY/iYDpcHJIRdGu9pdafc9HjYWjNLim0Dr5J5jwizHxoUF55bjeBNXfWrHrnT4ICgdsaC4dIHGsaCvxDht491QTPJOoOScSbruOlc8y8hKdnxICL7thj1z1j11jWIycCxWiA29S4plUnqnjt/4vxMaJ9XJYGL6S1EVbDrJE4T5tuWCNxaMBOeyXKVFRJieXTWXMu/2jd36YoJk8pSE9TT89fC6jAq8XPrb+EpCP78CsCzzgtjGdPwzJ2KO+A+SS3NxuaumkW9pylCmrPCZZ3JhdmxlrxLK8B3a8Y2+TS7R6k9lhQkX9FXFI6a2gHKobSEN2M5EV6OMRZxxoRwZ3x/QJC10MXOMILlKe6i6Bj3XPSo6gXcol9UFOWNondOn/ZV1YopETLOQS8lTE2SmQYQkxZtzBjV6ivWEp0SKnQoxCRODtyE8tI29begDXONLWtTxHMNaw9i4rtyAqhYG13/B2P/C+J0x/oQgT79AfmeQXf/TgRx8gXxhkN0PB7nqoQXyAFmS4Zl+uFHWE+N63CFGeUKwmZXav6X62P2YlGXQA46GSqYVsoJvMrzPKuPU/X9r49qrzMe6ojLmRTtyvqusgspWmrIeWztNkjZ2HegIHjx99YBTbfONWJETvhWKpTGRRzVySIU21JWwC8KQpC/d2x3C2pR74FTdu6YVDHraMbW7JcquTFb7qa1XyPOOFCq7HhTaU6/u8T/Y6A7ZeBNZU8eaRXoRzKyZmv+EaeV4EmoVyxrew4zla5INWdnh75sUPZU2o4Ds2D1s3DNBHjxO9AtdGuTJYZChFcz3C9cKgT5VrWe2FSjkZ1YIrdAbD/lGnNrSZF873onqBNraZNJGkSd4qjz5ozEXOL1fvbOZOz1S6NLMHb7bfKQ8HebaeFQbj0EucLuS5Xiqz7M45PpHS12aRcOXp0P6N66wHdO103lzXHmCD1Me6J2pPLAvYeC9lEeZzb9yZXjz1ya8+Qs=&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}"></div>
-<script type="text/javascript" src="https://viewer.diagrams.net/js/viewer-static.min.js"></script>
+![제목 없는 다이어그램 drawio (2)](https://user-images.githubusercontent.com/40001921/190834971-f4066622-9b3b-41db-ab85-86700101c3ac.png)
 
 \- 위와 같은 구조로, UserDao와 ConnectionMaker클래스를 분리하고, 서로 영향을 주지 않으면서 필요에 따라 확장할 수 있는 구조로 만들었음
 
