@@ -31,7 +31,7 @@
 | jomminii | [1장. 오브젝트와 의존관계](https://github.com/jomminii/toby-spring-study/blob/main/jomminii/chapter1/chapter1.md) |
 | inseo24  | [1장. 오브젝트와 의존관계](https://github.com/jomminii/toby-spring-study/tree/main/seoin/ch01) |
 | eastperson  | [1장. 오브젝트와 의존관계](https://github.com/jomminii/toby-spring-study/tree/main/eastperson/chapter1/chapter1.md) |                                                                                                         
-| xxx      |                                                                                                         |
+| seahan      | [1장.오브젝트와 의존관계] (https://github.com/jomminii/toby-spring-study/tree/main/eastperson/chapter01/README.md)                                                                                                         |
 
 ### Chapter2
 
