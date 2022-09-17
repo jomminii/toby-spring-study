@@ -15,7 +15,7 @@
 | 닉네임      |GitHub
 |----------| --- |
 | jomminii | [@jomminii](https://github.com/jomminii)
-| xxxx     | 
+| inseo24  | [@inseo24](https://github.com/inseo24)
 | xxxx     | 
 
 ## ✏️ Study
@@ -28,7 +28,7 @@
 |----------|---------------------------------------------------------------------------------------------------------|
 | BEST     |                                                                                                         |
 | jomminii | [1장. 오브젝트와 의존관계](https://github.com/jomminii/toby-spring-study/blob/main/jomminii/chapter1/chapter1.md) |
-| xxx      |                                                                                                         |
+| inseo24  | [1장. 오브젝트와 의존관계](https://github.com/jomminii/toby-spring-study/tree/main/seoin/ch01)                |                                                                                                         
 | xxx      |                                                                                                         |
 
 ### Chapter2
