@@ -1,5 +1,5 @@
 # [[토프링] 1장 오브젝트와 의존관계]
-- [블로그 주소에서 보면 편합니다.](https://velog.io/@jomminii/chapter01)
+- [블로그 주소에서 보면 편합니다.](https://velog.io/@jomminii/toby-spring-chapter01)
 
 # 1.1 초난감 DAO
 > DAO(Data Access Object) : DB 를 사용해 데이터를 조회하거나 조작하는 기능을 전담하도록 만든 오브젝트
