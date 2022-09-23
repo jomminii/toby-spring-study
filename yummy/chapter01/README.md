@@ -474,3 +474,108 @@ public class UserDaoTest {
 > **낮은 결합도: 책임과 관심사가 다른 오브젝트 또는 모듈과는 낮은 결합도, 즉 느슨하게 연결된 형태를 유지하여,연결에 필요한 최소한의 방법만 간접적인 형태로 제공하는 것. 하나의 오브젝트가 변경이 일어날 때에 관계를 맺고 있는 다른 오브젝트에게 변화를 요구하는 정도.** 가령 UserDao와 ConnectionMaker의 관계가 그렇다. UserDao는 구체적인 ConnectionMaker의 구현 클래스를 알 필요도 없음. 왜냐하면 ConnectionMaker라는 인터페이스를 통해 낮은 결합도로 최소한으로 연결되어있기 때문. 이 낮은 결합도를 통해 UserDao나 기타 Dao에 영향을 주지 않음
 
 > **전략 패턴: 자신의 기능맥락에서 필요에 따라 변경이 필요한 알고리즘 클래스를 필요에 따라 바꿔 사용할 수 있기 하는 디자인 패턴. 이때 알고리즘이란, 독립적인 책임으로 분리가 가능한 기능을 뜻함.** UserDao가 전략 패턴 컨텍스트에 해당함. DB연결방식이라는 컨텍스트를 ConnectionMaker라는 인터페이스로 정의하고, 이를 구현한 클래스, 즉 전략을 바꾸면서 사용했기에 전략패턴과 관련이 있다고 볼 수 있음.
+
+
+## 1.4 제어의 역전
+
+\- Inversion Of Control : 제어의 역전 
+
+\- 팩토리: 객체의 생성 방법을 결정하고 그렇게 만들어주는 오브젝트를 돌려주는 것
+
+\- 아래와 같이 Factory클래스를 분리하여, userDao 와 connectionMaker를 연결짓는 부분을 만든다.
+
+```
+package springbook.user.dao;
+
+
+public class DaoFactory {
+    public UserDao userDao(){
+        return new UserDao(connctionMaker());
+    }
+
+    /*public AccountDao accountDao(){
+        return new AccountDao(connctionMaker());
+    }
+
+    public MessageDao messageDao(){
+        return new MessageDao(connctionMaker());
+    }*/
+
+    public ConnectionMaker connctionMaker() {
+        return new DConnectionMaker();
+    }
+}
+```
+
+## 1.5 스프링 IoC
+
+\- **Bean** : 스프링이 제어권을 가지고 직접 만들고 관계를 부여하는 오브젝트. 제어의 역전이 적용되었음
+
+\- **Bean Factory** : 빈의 생성과 관계 설정 같은 제어를 담당하는 IoC오브젝트. 빈 생성과 제어에 초점이 맞추어져있음. 
+
+\- **ApplicationContext** : IoC방식을 따라 만들어진 일종의 빈 팩토리로, 애플리케이션 전반에 걸쳐 모든 구성요소의 제어 작업을 담당하는 IoC엔진. 스프링 컨테이너를 이야기함. BeanFactory를 상속한다.
+
+\- **Configuration MetaData**  : IoC를 적용하기 위해 사용하는 메타정보. 
+
+\- **Spring FrameWork** : IoC컨테이너 ( 빈팩토리 초점),ApplicationContext를 포함해서 스프링이 제공하는 모든 기능
+
+\- 별도의 정보를 참고해서 빈의 생성, 관계설정 등의 제어 작업을 총괄한다. 
+
+```
+@Configuration
+public class DaoFactory {
+    @Bean
+    public UserDao userDao(){
+        return new UserDao(connctionMaker());
+    }
+
+    /*public AccountDao accountDao(){
+        return new AccountDao(connctionMaker());
+    }
+
+    public MessageDao messageDao(){
+        return new MessageDao(connctionMaker());
+    }*/
+
+    @Bean
+    public ConnectionMaker connctionMaker() {
+        return new DConnectionMaker();
+    }
+}
+```
+
+\- @Configuration : 애플리케이션 컨텍스트 도는 빈 팩토리가 사용할 정보라는 것을 명시하는 스프링 어노테이션
+
+\- @Bean : 오브젝트 생성을 담당하는 IoC용 메서드에 붙임
+
+```
+public class UserDaoTest {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactory.class);
+        UserDao dao = context.getBean("userDao", UserDao.class);
+
+    }
+}
+```
+
+\- @Configuration이 붙은 자바 코드를 설정정보로 사용하려면 AnnotationConfigApplicationContext를 사용하여, 생성자 파라미터에 해당 클래스를 넣고 사용한다.
+
+\- getBean()은 ApplicationConext가 관리하는 오브젝트를 요청하는 메서드. userDao라는 빈은 생성자 메서드 이름과 동일함. 
+
+\- Application context를 사용했을 때의 장점.
+
+1\. 클라이언트는 구체적인 팩토리 클래스를 알 필요가 없다. => 일관된 방식으로 오브젝트를 가져올 수 있기 때문.
+
+2\. 애플리케이션 컨텍스트는 종합 IoC서비스를 제공해준다. => aop,자동 생성등과 같은 다양한 기능 제공.
+
+3\. 애플리케이션 컨텍스트는 빈을 검색하는 다양한 방법을 제공한다.  => getBean() 이외에도 타입만으로 빈을 검색하거나 애노테이션이 설정이 되어있는 빈을 찾을 수 있음.
+
+## 1.6 싱글톤 레지스트리
+
+\- 스프링은 서버 환경에서 싱글톤이 만들어져서 서비스 오브젝트 방식으로 사용되는 것은 적극 지지함.
+
+\- 자바의 싱글톤 패턴의 구현 방식은 여러가지 단점이 있기에, 스프링은 직접 싱글톤 형태의 오브젝트를 만들고 관리하는 기능을 제공함 => 싱글톤 레지스트리
+
+\- 싱글톤 레지스티리는 자바의 일반적인 싱글톤 패턴과 달리, private이나 스테틱 메서드를 사용하지 않고도 평범한 자바클래스를 싱글톤으로 활용할 수 있게 해줌 
+
+\- 빈 스코프 : 빈의 생성 주기 및 적용되는 범위 => 스프링은 싱글톤 스코프로, 컨테이너 내에 한 개의 오브젝트만 마들어짐.
