@@ -52,7 +52,7 @@
 | jomminii | [2장. 테스트](https://github.com/jomminii/toby-spring-study/blob/main/jomminii/chapter2/chapter2.md) |
 | inseo24  | [2장. 테스트](https://github.com/jomminii/toby-spring-study/tree/main/seoin/chapter2) |
 | withbeth | [2장. 테스트](https://github.com/jomminii/toby-spring-study/blob/main/withbeth/chapter2/README.md) |
-| xxx      |                                                                                                  |
+| takoyummy| [2장. 테스트](https://github.com/jomminii/toby-spring-study/blob/a81c63a67f22411b27d806f806326642e76faec2/yummy/chapter02/README.md)                               |
 | xxx      |                                                                                                  |                                                    |
 
 ### Chapter3
