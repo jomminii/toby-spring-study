@@ -21,13 +21,13 @@
 
 ## 👨‍💻 스터디원
 
-| 닉네임      |GitHub
-|----------| --- |
-| jomminii | [@jomminii](https://github.com/jomminii)
-| inseo24  | [@inseo24](https://github.com/inseo24)
-| eastperson  | [@eastperson](https://github.com/eastperson)
-| takoyummy   | [@takoyummy](https://github.com/takoyummy)
-| withbeth   | [@withbeth](https://github.com/withbeth)
+| 닉네임        | GitHub                                       |
+|------------|----------------------------------------------|
+| jomminii   | [@jomminii](https://github.com/jomminii)     |
+| inseo24    | [@inseo24](https://github.com/inseo24)       |
+| eastperson | [@eastperson](https://github.com/eastperson) |
+| takoyummy  | [@takoyummy](https://github.com/takoyummy)   |
+| withbeth   | [@withbeth](https://github.com/withbeth)     |
 
 ## ✏️ Study
 
@@ -47,11 +47,12 @@
 
 **테스트**
 
-| 닉네임  | 정리                                                                                                |
-|------|---------------------------------------------------------------------------------------------------|
-| xxx  |                                                                                                   |
+| 닉네임      | 정리                                                                                               |
+|----------|--------------------------------------------------------------------------------------------------|
+| jomminii | [2장. 테스트](https://github.com/jomminii/toby-spring-study/blob/main/jomminii/chapter2/chapter2.md) |
 | inseo24  | [2장. 테스트](https://github.com/jomminii/toby-spring-study/tree/main/seoin/chapter2) |
-| xxx  |  |                                                    |
+| xxx      |                                                                                                  |
+| xxx      |                                                                                                  |                                                    |
 
 ### Chapter3
 
