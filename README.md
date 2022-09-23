@@ -50,7 +50,7 @@
 | 닉네임  | 정리                                                                                                |
 |------|---------------------------------------------------------------------------------------------------|
 | xxx  |                                                                                                   |
-| xxx  |  |
+| inseo24  | [2장. 테스트](https://github.com/jomminii/toby-spring-study/tree/main/seoin/chapter2) |
 | xxx  |  |                                                    |
 
 ### Chapter3
