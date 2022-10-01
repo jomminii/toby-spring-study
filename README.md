@@ -61,7 +61,7 @@
 
 | 닉네임  | 정리                                                                                                |
 |------|---------------------------------------------------------------------------------------------------|
-| xxx  |                                                                                                   |
+| eastperson  | [3장. 템플릿](https://github.com/jomminii/toby-spring-study/blob/main/eastperson/chapter3/chapter3.md) |
 | xxx  |  |
 | xxx  |  |
 
