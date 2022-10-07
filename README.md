@@ -63,6 +63,7 @@
 |------|----------------------------------------------------------------------------------------------------|
 | jomminii | [3장. 템플릿](https://github.com/jomminii/toby-spring-study/blob/main/jomminii/chapter3/chapter3.md)   |
 | eastperson  | [3장. 템플릿](https://github.com/jomminii/toby-spring-study/blob/main/eastperson/chapter3/chapter3.md) |
+| withbeth | [3장. 템플릿](https://github.com/jomminii/toby-spring-study/blob/main/withbeth/chapter3/README.md) |
 | xxx  |                                                                                                    |
 | xxx  |                                                                                                    |
 
