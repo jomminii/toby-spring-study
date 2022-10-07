@@ -56,7 +56,7 @@
         - 보통 단일 메소드 인터페이스를 사용한다.
         - 템플릿/콜백 패턴의 일반적인 작업흐름
         
-        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4413e3d5-b25c-44c3-ac45-d196f82b0eea/Untitled.png)
+        ![템플릿/콜백 패턴 작업흐름](https://user-images.githubusercontent.com/66561524/193371399-3b71eac4-2a89-45d9-b0dc-5e4eb73978f9.png)
         
         - Callback을 분리해 재활용
             
