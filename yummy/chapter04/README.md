@@ -28,17 +28,20 @@
 ## 예외처리 방법
 - 예외 복구: 예외상황을 파악하고, 문제를 해결해서 정상 상태로 돌려놓으려는 것
 - 예외처리 회피 : 예외 처리를 자신이 담당하지 않고 자신을 호출한 쪽으로 던져버리는 것
-``` public void add() throws SQLException {
+``` 
+public void add() throws SQLException {
       try{
         // JDBC API
       }
       catch(SQLException e) {
         throw e;
       }
-     } ```
+     } 
+```
 - 예외 전환: 적절한 예외로 전환해서 예외를 메소드 밖으로 던지는 것 
    이렇게 조치하면 의미가 분명한 예외가 던져져서 서비스 계층 오브젝트에서 적절한 복구 작업을 시도할 수 있음
-``` public void add(User user) throws DuplicateUserIdException, SQLException {
+``` 
+public void add(User user) throws DuplicateUserIdException, SQLException {
         try {
             // JDBC를 이용해 user정보를 DB에 추가하는 코드 또는
             // 그런 기능을 가진 다른 SQLExcpetion을 던지는 메소드를 호출하는 코드
@@ -52,6 +55,7 @@
         }
     }
 ```
+
   보통 전환하는 예외에 원래 발생한 예외를 담아서 중첩 예외로 만든다.
   initCause()메서드를 이용해서 처음 발생한 예외가 무엇인지 확인할 수 있음
   
