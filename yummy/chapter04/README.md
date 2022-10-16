@@ -30,40 +30,40 @@
 - 예외처리 회피 : 예외 처리를 자신이 담당하지 않고 자신을 호출한 쪽으로 던져버리는 것
 ``` 
 public void add() throws SQLException {
-      try{
-        // JDBC API
-      }
-      catch(SQLException e) {
-        throw e;
-      }
-     } 
+   try{
+          // JDBC API
+   }
+   catch(SQLException e) {
+     throw e;
+   }
+} 
 ```
 - 예외 전환: 적절한 예외로 전환해서 예외를 메소드 밖으로 던지는 것 
    이렇게 조치하면 의미가 분명한 예외가 던져져서 서비스 계층 오브젝트에서 적절한 복구 작업을 시도할 수 있음
 ``` 
 public void add(User user) throws DuplicateUserIdException, SQLException {
-        try {
-            // JDBC를 이용해 user정보를 DB에 추가하는 코드 또는
-            // 그런 기능을 가진 다른 SQLExcpetion을 던지는 메소드를 호출하는 코드
-        }
-        catch(SQLException e){
-            // error 코드가 mysql의 duplicate entry이면 예외 전환
-            if(e.getErrorCode() == MysqlErrorNumbers.EP_DUP_ENTRY)
-                throw DuplicateUserIdExcpetion();
-            else
-                throw e;
-        }
-    }
+  try {
+      // JDBC를 이용해 user정보를 DB에 추가하는 코드 또는
+      // 그런 기능을 가진 다른 SQLExcpetion을 던지는 메소드를 호출하는 코드
+  }
+  catch(SQLException e){
+      // error 코드가 mysql의 duplicate entry이면 예외 전환
+      if(e.getErrorCode() == MysqlErrorNumbers.EP_DUP_ENTRY)
+          throw DuplicateUserIdExcpetion();
+      else
+          throw e;
+  }
+}
 ```
 
   보통 전환하는 예외에 원래 발생한 예외를 담아서 중첩 예외로 만든다.
   initCause()메서드를 이용해서 처음 발생한 예외가 무엇인지 확인할 수 있음
   
 ```
-    catch(SQLException e){
-        ...
-        throw DuplicateUserIdException().initCause(e);
-    }
+ catch(SQLException e){
+     ...
+     throw DuplicateUserIdException().initCause(e);
+ }
 ```
   또는 예외를 처리하기 쉽고 단순하게 만들기 위해 포장하는 방법이 있다. 
   복구 가능한 예외가 아닐 경우 런타임 에러, 예컨대 RuntimeException을 상속 받는 EjbException으로 포장하여 던짐.
