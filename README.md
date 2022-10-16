@@ -74,7 +74,7 @@
 | 닉네임  | 정리                                                                                                |
 |------|---------------------------------------------------------------------------------------------------|
 | withbeth | [4장. 예외](https://github.com/jomminii/toby-spring-study/blob/main/withbeth/chapter4/README.md) |
-| xxx  |  |
+| takoyummy  | [4장. 예외](https://github.com/jomminii/toby-spring-study/blob/9408721e71391b50b45365a133aa6a524c30226c/yummy/chapter04/README.md) |
 | xxx  |  |
 ### Chapter5
 
