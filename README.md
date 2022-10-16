@@ -71,11 +71,12 @@
 
 **예외**
 
-| 닉네임  | 정리                                                                                                |
-|------|---------------------------------------------------------------------------------------------------|
-| withbeth | [4장. 예외](https://github.com/jomminii/toby-spring-study/blob/main/withbeth/chapter4/README.md) |
-| takoyummy  | [4장. 예외](https://github.com/jomminii/toby-spring-study/blob/9408721e71391b50b45365a133aa6a524c30226c/yummy/chapter04/README.md) |
-| xxx  |  |
+| 닉네임       | 정리                                                                                                                              |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------|
+| withbeth  | [4장. 예외](https://github.com/jomminii/toby-spring-study/blob/main/withbeth/chapter4/README.md)                                   |
+| takoyummy | [4장. 예외](https://github.com/jomminii/toby-spring-study/blob/9408721e71391b50b45365a133aa6a524c30226c/yummy/chapter04/README.md) |
+| jomminii  | [4장. 예외](https://github.com/jomminii/toby-spring-study/blob/main/jomminii/chapter4/chapter4.md)                                 |
+
 ### Chapter5
 
 **서비스 추상화**
