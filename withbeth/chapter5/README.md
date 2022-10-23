@@ -1,0 +1,160 @@
+ > Note : 해당 문서는 [WorkFlowy](https://workflowy.com/s/5-service-abstractio/VUIZwymDBmNA3e3l)에 최적화 되어있습니다.
+
+# Chapter5 - PSA
+
+## What I learned
+
+    -   스프링이 왜/어떻게, 어떻게 목적은 같으나 방법이 다른 기술들의 추상화된 인터페이스와 일관된 방법인 PSA를 제공하는지.
+        -   What? PSA가 뭐죠?
+            -   특정 기술과 구현방법에 종속되지 않도록, 추상화된 인터페이스와 일관된 방법을 제공하는 계층
+        -   Why? 스프링이 그걸 왜 제공하죠?
+            -   PSA + DI를 통해, SRP원칙과 OCP를 지키며, 특정 기술에 종속되지 않는 포터블한 코드를 POJO로 작성가능하게 하기 위해.
+        -   When? 언제 추상화 계층을 쓰죠?
+            -   1) Tx기능과 같이, 목적은 동일하나, 방법이 다른(Same Purpose, different approach) 기술들이 존재할때, 추상화 된 인터페이스와 일관된 방법을 제공해야 한다.
+            -   2) Testable하지 않은 API를 이용하려고 할때.(특히, 외부 리소스 연동과 같은 작업)
+        -   How? 스프링이 어떤 식으로, 서비스 추상화 계층을 제공하죠?
+            -   Tx : PlatformTxManager
+                
+            -   Mail : MailSender
+                
+    -   JDBC(Tmpl)의 local Tx ~ 스프링이 제공하는 Tx동기화 기능 ~ JTA ~ 스프링이 제공하는 Tx추상화계층
+    -   테스트 대역 review (Test double / Test stub / Mock object)
+        
+##  TL;DR
+
+    -   전 장까지의 구현
+        -   원칙 : 서로 다른 성격의 코드(비지니스 로직과 데이터 접근 제어)를 분리하고, 그 안에서도 개체의 역할 및 책임에 맞게 코드를 분리해야 한다
+        -   구현 : "IF + DI + 스프링이 제공하는 추상화계층 예외"를 통해, DAO의 기술 및 구현방법 변경에 따라 서비스 계층이 영향받지 않고, 런타임 의존성만 유연하게 바꿀수 있도록 구현해왔다(OCP)
+    -   이번장에서의 구현
+        -   Tx의 도입.
+        -   DAO를 사용하는 비즈니스 로직은, 단위 작업을 보장하는 Tx가 필요하다.
+        -   이러한 Tx 경계설정(시작과 종료)는, 주로 비지니스 로직에서 설정한다.
+        -   Problem : 그런데, 비지니스 로직에서 설정한 Tx정보를, DAO에 밀어 넣는 것은 비효율적이다.
+        -   Solution : 따라서, 스프링이 제공하는 Tx동기화 기능을 사용하여 이 문제를 해결한다.
+        -   또한, 자바에서 사용가능한 Tx API종류와, 방법은 다양하다. (같은 목적을 가졌으나 방법이 다른 다양한 기술들이 존재)
+        -   Problem : 이 기술들을 "직접적"으로 사용하게 되면, 해당 Tx기술에 종속되게 되어, 해당 기술 변경시, 상관 없는 비지니스 로직까지 수정이 필요하게 된다. (SRP위반)
+        -   Solution : 스프링이 제공하는 Tx 서비스 추상화 계층을 사용하여 이 문제를 해결한다.
+    
+##  TOC
+
+    -   사용자 레벨 관리 기능 추가
+        -   새로운 요구 사항
+            -   사용자는, Basic, Silver, Gold중 하나의 레벨을 부여받는다.
+            -   각 레벨에서, 일정한 조건 충족시, 업그레이드 가능하다.
+        -   필드 추가
+            -   Goal : DB, Dao, Obj 각각에 새로운 필드 추가
+            -   New field : Lv, loginCount, RecommendCount
+            -   ! JDBC가 사용하는 SQL은, 실제 DB전달되어 실행되기 전까지는, 문법오류를 찾을 수 없다.
+                -   따라서, UT에서 실제 DB연동되는 테스트는 Mandatory.
+        -   사용자 수정기능 추가
+            -   Goal : update user by id
+            -   ! 다른 유저는 업데이트 안되었는지 검증이 필요하다
+                -   Opt1: Check return type of update method
+                -   Opt2: manually check if other user is updated or not
+            -   ! 성능 향상을 위해, 해당 필드 수정전용 DAO를 가지게 할 수 있다(실제 실무에서 이렇게까지 최적화를 진행해야하나 토론했던 것 같다)
+            -   ! 테스트 코드를 통해, 구현코자 하는 코드의 signature를 먼저 만들고, IDE가 자동생성하는 방법이 철자 오류없이 더 빠르게 생성가능하다.
+        -   upgradeLevels() 기능 추가
+            -   Goal : 유저 레벨 승급 비지니스 로직 작성
+        -   basic level 기능 추가
+            -   Goal : 유저 기본 레벨은 Basic이어야 한다
+            -   ! 이 로직은 어디 있어야 할까?
+                -   Opt1: In UserDao.add() => NOPE. Dao는 DB CRUD에만 관심을 가져야 한다
+                -   Opt2: In UserObj constructor() => 생성자에서 기본레벨을 초기화 하는 것도 나쁘지는 않다.
+                -   Opt3: In UserService.add() => 사용자 등록시에 적용할 비즈 로직 담당하기에 여기서 초기화 하는 것도 나쁘지 않다.
+        -   Refactoring
+            -   Goal : UserService.upgradeLevel() 리팩토링
+            -   Problem : 해당 메서드에 성격이 다른 코드 들이 묶여 있다. (=해당 메서드가 너무 많은 책임을 지고 있다)
+            -   Solution : 현재 함수의 책임을 "한 문장"으로 표현해 보고, 다른 개념이 섞여있거나, 문장수가 너무 많아지면 함수 분할.
+                -   현재 함수 책임: 각 유저의 레벨 승급 가능 여부 체크 및 승급 및 DB 업데이트
+                -   여기서, 레벨 승급 가능 여부 체크와 실제 승급은 각 전용 정책과 조건 개체에 책임을 위임한다.(e.g, LvUpgradeCondition, LvUpgradePolicy)
+    -   Tx Service Abstraction
+        -   All or Nothing
+            -   Expectation : 유저들의 레벨 업그레이드 도중, 예외가 일어날 경우, 모두 실패하거나 모두 성공해야 한다.
+            -   Actual : Tx설정이 되어 있지 않아, 예외가 일어나기 전까지의 유저는 DB 갱신 성공. 예외 일어난 후의 유저들은 레벨승급이 실패한다.
+        -   Tx 경계설정
+            -   JDBC의 Tx
+                -   JDBC의 Tx는, connection open ~ close사이에 일어날다.
+                -   Connection개체를 이용해 Tx수행하기 때문이다(= Local Tx)
+                -   Tx 시작 설정 : connection.setAutoCommit(false)함으로써, 새로운 Tx수행시작이 가능해진다
+                -   Tx 종료 설정 : connection.commit() or connection.rollback()
+            -   JDBCTmpl의 Tx
+                -   흐름은 JDBC와 같다
+                -   tmpl method안에서, connection개체 get ~ 작업완료후 close.
+                -   따라서, 해당 tmpl method가 불릴때마다 local TX가 발생하게 된다.
+            -   Problem : 그러면, 비즈 로직에서 어떻게 connection을 제어하지?
+                -   Opt1 : 서비스계층에서 connection생성 및 종료 책임을 추가로 담당. 데이터 접근 계층에게 connection개체를 넘긴다.
+                    -   connection개체를 비즈로직에서 관리함으로써 생기는 Problem :
+                        -   1) can NOT use JDBC Tmpl
+                        -   2) 서비스 계층의 메서드에 Connection개체를 인자로 넘기게 된다 (해당 개체는 싱글톤이니, 인스턴스 변수에 저장 불가하므로)
+                        -   3) 다시 기술종속적이게 된다 (JDBC : Connection, Hibernate : EntityManager or Session로 Tx관리하므로)
+                        -   4) Hard to test
+                        -   1 Backlink
+                            -   해당 문제점 3,4번 해결 안됨 ([connection개체를 비즈로직에서 관리함으로써 생기는 Problem :](https://workflowy.com/#/394a0db50041))
+                -   Opt2: 스프링의 Tx동기화 기능 이용
+                    -   What is Tx동기화 기능?
+                        -   Tx를 위한 connection개체를, 특정 저장소에서 store.
+                        -   Tx종료하기전까지는, 저장소에 저장하고있는 connection을 이용하여 Tx수행한다.
+                        -   이 특정 저장소는 Thread마다 격리되어 있어, 멀티쓰레딩 환경에서도 안전하게 수행가능하다.
+                    -   How?
+                    -   Q: JdbcTmpl은 수정하지 않았는데, 어떻게 알아서 Tx동기화의 connection을 자동으로 사용하지?
+                        -   JdbcTmpl은, Tx동기화 된 connection이 있으면 재사용. 없으면 새로 생성한다.
+                        -   JdbcTmpl의 3대 어필포인트
+                            -   1) tmpl/callback패턴 이용한, try/catch/finally흐름 지원
+                            -   2) SQLException의 Checked예외로 변환 및 추상화 계층 Exception지원
+                            -   3) 스마트한 Connection 생성 또는 재사용
+            -   Q: 하나의 Tx로, 여러 DB에 데이터 조작하려면 어떻게 하지?
+                -   JDBC connection이용한 방식인 local Tx로는 위 문제를 해결할 수 없다.
+                -   결국 하나의 connection에 종속되는 Tx방식이기에.
+                -   따라서, 별도의 Tx관리자를 통해 사용하는 global Tx방식이 필요하다.
+                -   자바에서는 JTA을 제공하여, Tx관리 기능은 해당 API에게 모두 위임할 수 있다
+                    -   Tx는 JDBC나, JMS가 담당하지 않고 JTA를 통해 TxManager가 담당할 수 있게 된다.
+                    -   이때, 각 리소스 매니저와는, XA 프로토콜을 이용해 연결한다.
+            -   Q: 그래도 결국, JDBC라는 기술에 종속되있는 문제점은 해결못하지 않았나? SRP위반이지 않나?
+                -   해당 문제점 3,4번 해결 안됨 ([connection개체를 비즈로직에서 관리함으로써 생기는 Problem :](https://workflowy.com/#/394a0db50041))
+        -   PSA and SRP
+            -   Problem : 서비스 계층의, 특정 Tx API의존으로 인한 SRP 위반
+                -   지금까지 UserService는, UserDao와 추상화된 IF 및 DI를 통해, DAO의 기술구현이 JDBC던, Hibernate던, UserService에는 변경이유도, 영향도 없었다(OCP)
+                -   하지만, 특정 Tx API를 서비스 계층에서 이용하게 됨으로써, 서비스 계층도 기술 종속적이게 되었다.
+            -   Solution :
+                -   PSA
+                    -   Spring이 제공하는 Tx 추상화 계층 API를 이용해서, Tx라는 기술을 추상화
+                -   PSA + DI를 통한 계층과 책임 분리
+                    -   UserService -> UserDao : IF + DI를 통해 결합을 낮추고, OCP할 수 있게 되었다.
+                    -   또한, UserDao는 DB connection생성 방법도 IF + DI를 통해 결합도를 낮추었다.
+                        -   추상화된 역할(IF)의 주입(DI)을 통해, 로우레벨의 기술을 사용하기 때문이다.
+                    -   결국, 같은 계층의 수평적 분리이건, 로직과 기술이라는 수직적인 분리이건,
+                    -   Spring의 DI를 통해, OCP하며 SRP원칙을 지킬수 있다.
+                        -   IF를 통한 추상화만 이용했다면, 구체적 의존 정보가 드러나게 된다.
+                        -   개체생성과 의존관계 설정을 DI container가 핸들하기에, 특정 기술에 종속되지 않는 포터블 한 코드를 얻을 수 있었다.
+                        -   거기다, 이 DI과정 중에, 다양한 패턴(데코레이터, 어댑터, 프록시 라우팅등..)들을 적용 가능하다.
+                -   SRP?
+                    -   PSA + DI를 통해, SRP 원칙을 지킬 수 있게 되었다.
+                    -   What?
+                        -   모듈이 바뀌는 이유는 한 가지 이어야 한다.
+                    -   Why?
+                        -   변경 필요한 수정 대상과 범위의 명확화.
+                    -   Exam?
+                        -   UserService에서는 비즈 로직 + Tx경계 설정을 위한 JDBC connection생성을 담당하고 있었기에, 모듈이 바뀌는 이유 또한 2가지 였다.(=SRP위반)
+                        -   이를 해결하기 위해, PSA를 통한 Tx생성 및 해당 개체의 DI를 통해, 모듈이 바뀌어야 하는 이유는 비즈 로직 한가지로 줄일 수 있었다.
+    -   Mail Service Abstraction
+        -   JavaMail이용한 메일송신 기능 구현
+            -   Goal : 레벨 업그레이드 된 유저에게 메일을 발송 하고 싶다.
+        -   JavaMail이 포함된 코드 테스트 구현
+            -   Goal : 해당 기능을 추가 했으니, 테스트도 작성하고 싶다.
+            -   How?
+                -   UT에서 매번 테스트 서버에 메일을 전송하는 것은 부담이 크다.
+                -   또한, 해당 테스트는, 실제 메일이 발송해서, "메일 서버에 잘 도착했는지"까지를 확인할 필요가 있어서, UT에서는 테스트 검증이 불가능하다.
+                -   따라서, UT에서는, "수많은 프로젝트에서 검증된 JavaMailAPI를 통해 발신 요청 동착이 수행되었는가" 까지만 검증하도록 한다.
+                -   문제는, JavaMailAPI가 확장이 불가능하도록 설계된 API이기에, 테스트 수행이 어렵다는 점이다.
+                -   따라서, 여기에서도 PSA(Mail 서비스 추상화 계층) + DI를 이용하여, 테스트를 실행한다.
+        -   PSA for testing
+            -   PSA + DI를 통해, Testable하지 않은 API또한 테스트 가능케 되었다.
+            -   이렇든, 원할한 테스트 만을 위해서라도, PSA + DI는 가치가 있다.
+        -   Test double
+            -   Goal : 테스트 대상 개체로부터 받은 메시지(요청,정보) 검증하기
+            -   How?
+                -   Use TestDouble(MockObject).
+                -   테스트 대상 개체가 또다른 개체에 의존하는 일은 흔하다.
+                -   이러한 의존 개체들을 테스트용으로 대역하여 사용하는 개체를 TestDouble이라 한다.
+                -   그 중에서도, 테스트 수행시 코드가 정상적으로 수행토록 "간접적"으로 돕는 개체를 TestStub이라 하며,
+                -   의존 개체에 넘기는 값 또는 행위를 검증하기 위한 개체를 MockObject라 한다.
