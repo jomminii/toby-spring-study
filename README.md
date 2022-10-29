@@ -96,7 +96,7 @@
 | 닉네임  | 정리                                                                                                |
 |------|---------------------------------------------------------------------------------------------------|
 | withbeth  | [6장. AOP](https://github.com/jomminii/toby-spring-study/blob/main/withbeth/chapter6/README.md) |
-| xxx  |                                                                                                   |
+| eastperson | [6장. AOP](https://github.com/jomminii/toby-spring-study/blob/main/eastperson/chapter6/chapter6.md) |
 | xxx  |  |
 | xxx  |  |
 
